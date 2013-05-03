@@ -20,12 +20,12 @@ object Parser {
       else {
         val rowItems = rows.head.split(parserSetting.separator)
         val date = new LocalDate(rowItems(parserSetting.dateIndex).trim)
+        val company = rowItems(parserSetting.companyIndex).trim
         val value =
           if (parserSetting.decimalSeparator.isDefined)
-            rowItems(parserSetting.valueIndex).trim.replace(parserSetting.decimalSeparator.get, ".").toDouble
+            rowItems(parserSetting.valueIndex).replace(parserSetting.decimalSeparator.get, ".").toDouble
           else
-            rowItems(parserSetting.valueIndex).trim.toDouble
-        val company = rowItems(parserSetting.companyIndex).trim
+            rowItems(parserSetting.valueIndex).toDouble
 
         buildItems(rows.tail, Transaction(date, value, company) :: items)
       }

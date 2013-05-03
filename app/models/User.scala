@@ -115,7 +115,6 @@ object User {
           case email ~ password ~ salt => ValidationUser(email, password, salt)
         }
 
-
       val validationUser =
           SQL(
           """
