@@ -7,7 +7,6 @@ package controllers
 import play.api.mvc._
 import play.api.data.Forms._
 import play.api.data.Form
-import AuthenticatedRequest.userRequest
 
 object Application extends Controller {
   val userForm = Form(

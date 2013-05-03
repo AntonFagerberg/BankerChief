@@ -11,6 +11,9 @@ import AuthenticatedRequest.userRequest
 
 object Parse extends Controller {
   def submit = userRequest() { implicit request =>
-    Ok(views.html.parse())
+    val sentForm = Form("data" -> nonEmptyText).bindFromRequest()
+    if (!sentForm.hasErrors)
+      models.Parser.parse(sentForm.get)
+    Ok(views.html.parse(sentForm))
   }
 }
