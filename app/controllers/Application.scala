@@ -9,7 +9,6 @@ import play.api.data.Forms._
 import play.api.data.Form
 import AuthenticatedRequest.userRequest
 
-
 object Application extends Controller {
   val userForm = Form(
     tuple(
@@ -20,16 +19,6 @@ object Application extends Controller {
     )
   )
 
-  // Protected pages:
-  def protectedPage = userRequest() { implicit request =>
-    Ok(views.html.secret())
-  }
-
-  def protectedPageWithExplicitAuthenticationFunction = userRequest(models.User.authenticateEmail) { implicit request =>
-    Ok(views.html.secret())
-  }
-
-  // Unprotected pages:
   def logout = Action { implicit request =>
     Redirect(routes.Application.index()).withNewSession.flashing("message" -> "You are signed out!")
   }
@@ -42,6 +31,6 @@ object Application extends Controller {
     val sentForm = userForm.bindFromRequest()
 
     if (sentForm.hasErrors) BadRequest(views.html.login(sentForm))
-    else Redirect(routes.Application.protectedPage()).withSession(AuthenticatedRequest.sessionField -> sentForm.get._1)
+    else Redirect(routes.Parse.submit()).withSession(AuthenticatedRequest.sessionField -> sentForm.get._1)
   }
 }
